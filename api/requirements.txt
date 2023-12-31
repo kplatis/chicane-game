@@ -1,0 +1,2 @@
+fastapi==0.108.0
+tortoise==0.1.1
