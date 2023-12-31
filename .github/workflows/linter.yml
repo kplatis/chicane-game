@@ -5,7 +5,7 @@ on:
   # but only for the main branch
   push:
     branches:
-      - main
+      - add-linter
   pull_request:
     branches:
       - main
