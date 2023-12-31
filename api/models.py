@@ -18,5 +18,3 @@ class Response(Model):
     id = fields.IntField(pk=True)
     category = fields.ForeignKeyField("models.GameCategory", related_name="responses")
     title = fields.CharField(max_length=300)
-
-

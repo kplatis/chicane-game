@@ -10,8 +10,8 @@ app = FastAPI()
 
 async def init():
     await Tortoise.init(
-        db_url='sqlite://db.sqlite3',
-        modules={'models': ['api.models']},
+        db_url="sqlite://db.sqlite3",
+        modules={"models": ["api.models"]},
     )
     await Tortoise.generate_schemas()
 
