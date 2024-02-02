@@ -10,8 +10,8 @@ async def create_game_category(game_category: GameCategorySchema = Body(embed=Tr
     """
     Endpoint to create a new game category
     """
-    test = await GameCategory.create(**game_category.model_dump())
-    return test
+    new_category = await GameCategory.create(**game_category.model_dump())
+    return new_category
 
 
 @router.get("")
