@@ -2,11 +2,13 @@
 
 from fastapi import FastAPI
 from tortoise import Tortoise
-from .router import router
+from api.routers import games as games_routers
+from api.routers import categories as categories_routers
 
 app = FastAPI()
 
-app.include_router(router)
+app.include_router(games_routers.router, prefix="/games")
+app.include_router(categories_routers.router, prefix="/categories")
 
 
 async def init():
