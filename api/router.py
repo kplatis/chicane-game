@@ -1,7 +1,8 @@
 from datetime import date
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Body, HTTPException
 from tortoise.exceptions import DoesNotExist
-from api.models import Game
+from api.models import Game, GameCategory
+from api.schemas import GameCategorySchema
 
 router = APIRouter()
 
@@ -22,3 +23,22 @@ async def get_daily_game():
         return db_item.__dict__
     except DoesNotExist as exc:
         raise HTTPException(status_code=404, detail="Game not found") from exc
+
+
+@router.post("/category")
+async def create_game_category(game_category: GameCategorySchema = Body(embed=True)):
+    """
+    Endpoint to create a new game category
+    """
+    test = await GameCategory.create(**game_category.model_dump())
+    return test
+
+
+@router.get("/category")
+async def get_game_categories():
+    """
+    Endpoint to get game categories
+    """
+    categories = await GameCategory.all()
+    return categories
+
