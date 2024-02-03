@@ -1,12 +1,26 @@
 """FastAPI Application for Daily Games"""
 
-from datetime import date
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from tortoise import Tortoise
-from tortoise.exceptions import DoesNotExist
-from api.models import Game
+from tortoise.contrib.fastapi import register_tortoise
+from api.routers import games as games_routers
+from api.routers import categories as categories_routers
+
+tags_metadata = [
+    {
+        "name": "Games",
+        "description": "Operations related to games",
+    },
+    {
+        "name": "Categories",
+        "description": "Operations related to game categories",
+    },
+]
 
 app = FastAPI()
+
+app.include_router(games_routers.router, prefix="/games")
+app.include_router(categories_routers.router, prefix="/categories")
 
 
 async def init():
@@ -15,11 +29,14 @@ async def init():
 
     This function is intended to be called during the startup of the FastAPI application.
     """
-    await Tortoise.init(
+
+    register_tortoise(
+        app,
         db_url="sqlite://db.sqlite3",
         modules={"models": ["api.models"]},
+        generate_schemas=True,
+        add_exception_handlers=True,
     )
-    await Tortoise.generate_schemas()
 
 
 @app.on_event("startup")
@@ -32,19 +49,9 @@ async def startup_event():
     await init()
 
 
-@app.get("/games/daily")
-async def root():
+@app.on_event("shutdown")
+async def shutdown_event():
     """
-    Endpoint to retrieve information about the daily game.
-
-    Returns:
-        dict: Dictionary representing the details of the daily game.
-
-    Raises:
-        HTTPException: Raised with a 404 status code and a message if the game is not found.
+    Event handler for the shutdown of the FastAPI application
     """
-    try:
-        db_item = await Game.get(date=date.today())
-        return db_item.__dict__
-    except DoesNotExist as exc:
-        raise HTTPException(status_code=404, detail="Game not found") from exc
+    await Tortoise.close_connections()

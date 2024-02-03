@@ -4,7 +4,7 @@ Module defining Tortoise ORM models for a game application.
 This module contains the definition of the following models:
 - Game: Represents a game with a question, date, and category.
 - GameCategory: Represents a category of games.
-- Response: Represents a user response.
+- Option: Represents an option for a category.
 
 Each model is a subclass of Tortoise's Model class and defines fields
 that correspond to the attributes of the entities they represent.
@@ -42,19 +42,18 @@ class GameCategory(Model):
 
     id = fields.IntField(pk=True)
     title = fields.CharField(max_length=100)
-    games = fields.ReverseRelation["Game"]
 
 
-class Response(Model):
+class Option(Model):
     """
-    Model representing a user response.
+    Model representing an option of a category.
 
     Attributes:
-        id (int): The unique identifier for the response.
-        category (GameCategory): The category associated with the response.
-        title (str): The title of the response.
+        id (int): The unique identifier for the option.
+        category (GameCategory): The category associated with the option.
+        title (str): The title of the option.
     """
 
     id = fields.IntField(pk=True)
-    category = fields.ForeignKeyField("models.GameCategory", related_name="responses")
+    category = fields.ForeignKeyField("models.GameCategory", related_name="options")
     title = fields.CharField(max_length=300)
