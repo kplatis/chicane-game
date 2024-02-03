@@ -15,6 +15,7 @@ class GameCategorySchema(BaseModel):
     """
     Schema defining a game category
     """
+
     title: str
 
 
@@ -22,4 +23,5 @@ class OptionSchema(BaseModel):
     """
     Schema defining an Option
     """
+
     title: str

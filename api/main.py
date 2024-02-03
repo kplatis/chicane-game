@@ -22,6 +22,7 @@ app = FastAPI()
 app.include_router(games_routers.router, prefix="/games")
 app.include_router(categories_routers.router, prefix="/categories")
 
+
 async def init():
     """
     Initialize Tortoise ORM with database configuration and generate schemas.
@@ -31,12 +32,11 @@ async def init():
 
     register_tortoise(
         app,
-        db_url='sqlite://db.sqlite3',
-        modules={'models': ['api.models']},
+        db_url="sqlite://db.sqlite3",
+        modules={"models": ["api.models"]},
         generate_schemas=True,
-        add_exception_handlers=True
+        add_exception_handlers=True,
     )
-
 
 
 @app.on_event("startup")

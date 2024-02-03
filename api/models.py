@@ -43,6 +43,7 @@ class GameCategory(Model):
     id = fields.IntField(pk=True)
     title = fields.CharField(max_length=100)
 
+
 class Option(Model):
     """
     Model representing an option of a category.

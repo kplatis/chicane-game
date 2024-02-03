@@ -18,7 +18,7 @@ router = APIRouter()
 
 
 @router.post("", tags=["Categories"])
-async def create_game_category(game_category: GameCategorySchema = Body(embed = False)):
+async def create_game_category(game_category: GameCategorySchema = Body(embed=False)):
     """
     Endpoint to create a new game category
     """
@@ -37,7 +37,9 @@ async def get_game_categories():
 
 
 @router.post("/{category_id}/options", tags=["Categories"])
-async def create_option_for_category(category_id: int, option: OptionSchema = Body(embed = False)):
+async def create_option_for_category(
+    category_id: int, option: OptionSchema = Body(embed=False)
+):
     """
     Endpoint to create option for category
     """
