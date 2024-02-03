@@ -42,8 +42,6 @@ class GameCategory(Model):
 
     id = fields.IntField(pk=True)
     title = fields.CharField(max_length=100)
-    games = fields.ReverseRelation["Game"]
-    options = fields.ReverseRelation["Option"]
 
 class Option(Model):
     """

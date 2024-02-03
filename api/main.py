@@ -2,9 +2,9 @@
 
 from fastapi import FastAPI
 from tortoise import Tortoise
+from tortoise.contrib.fastapi import register_tortoise
 from api.routers import games as games_routers
 from api.routers import categories as categories_routers
-
 
 app = FastAPI()
 
@@ -17,11 +17,14 @@ async def init():
 
     This function is intended to be called during the startup of the FastAPI application.
     """
-    await Tortoise.init(
-        db_url="sqlite://db.sqlite3",
-        modules={"models": ["api.models"]},
+    register_tortoise(
+        app,
+        db_url='sqlite://db.sqlite3',
+        modules={'models': ['api.models']},
+        generate_schemas=True,
+        add_exception_handlers=True
     )
-    await Tortoise.generate_schemas()
+
 
 
 @app.on_event("startup")

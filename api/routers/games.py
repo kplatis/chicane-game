@@ -1,3 +1,11 @@
+"""
+Module containing an API router for handling requests related to daily games.
+
+This module defines an API router using FastAPI's APIRouter class. The router 
+includes an endpoint for retrieving information about the daily game. It interacts with 
+the database using Tortoise-ORM's Game model.
+"""
+
 from datetime import date
 from tortoise.exceptions import DoesNotExist
 from fastapi import APIRouter, HTTPException
@@ -23,4 +31,3 @@ async def get_daily_game():
         return db_item.__dict__
     except DoesNotExist as exc:
         raise HTTPException(status_code=404, detail="Game not found") from exc
-
