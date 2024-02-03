@@ -42,4 +42,5 @@ class GameInSchema(GameBaseSchema):
     """
     Schema defining a game
     """
+
     correct_answer_id: int
