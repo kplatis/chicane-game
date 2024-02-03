@@ -6,6 +6,17 @@ from tortoise.contrib.fastapi import register_tortoise
 from api.routers import games as games_routers
 from api.routers import categories as categories_routers
 
+tags_metadata = [
+    {
+        "name": "Games",
+        "description": "Operations related to games",
+    },
+    {
+        "name": "Categories",
+        "description": "Operations related to game categories",
+    },
+]
+
 app = FastAPI()
 
 app.include_router(games_routers.router, prefix="/games")
@@ -17,6 +28,7 @@ async def init():
 
     This function is intended to be called during the startup of the FastAPI application.
     """
+
     register_tortoise(
         app,
         db_url='sqlite://db.sqlite3',

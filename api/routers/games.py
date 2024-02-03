@@ -15,7 +15,7 @@ from api.models import Game
 router = APIRouter()
 
 
-@router.get("/daily")
+@router.get("/daily", tags=["Games"])
 async def get_daily_game():
     """
     Endpoint to retrieve information about the daily game.

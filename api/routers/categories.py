@@ -17,7 +17,7 @@ from api.schemas import GameCategorySchema, OptionSchema
 router = APIRouter()
 
 
-@router.post("")
+@router.post("", tags=["Categories"])
 async def create_game_category(game_category: GameCategorySchema = Body(embed = False)):
     """
     Endpoint to create a new game category
@@ -26,7 +26,7 @@ async def create_game_category(game_category: GameCategorySchema = Body(embed = 
     return new_category
 
 
-@router.get("")
+@router.get("", tags=["Categories"])
 async def get_game_categories():
     """
     Endpoint to get game categories
@@ -36,7 +36,7 @@ async def get_game_categories():
     return categories
 
 
-@router.post("/{category_id}/options")
+@router.post("/{category_id}/options", tags=["Categories"])
 async def create_option_for_category(category_id: int, option: OptionSchema = Body(embed = False)):
     """
     Endpoint to create option for category
@@ -48,7 +48,7 @@ async def create_option_for_category(category_id: int, option: OptionSchema = Bo
     return new_option
 
 
-@router.get("/{category_id}/options")
+@router.get("/{category_id}/options", tags=["Categories"])
 async def get_options_of_category(category_id: int):
     """
     Endpoint to create option for category
