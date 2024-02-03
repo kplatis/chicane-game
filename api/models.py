@@ -28,6 +28,7 @@ class Game(Model):
     question = fields.CharField(max_length=300)
     date = fields.DateField()
     category = fields.ForeignKeyField("models.GameCategory", related_name="games")
+    correct_answer = fields.ForeignKeyField("models.Option", related_name="games")
 
 
 class GameCategory(Model):

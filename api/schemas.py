@@ -8,6 +8,7 @@ They are implemented using Pydantic BaseModel, providing data validation
 and serialization capabilities.
 """
 
+from datetime import date
 from pydantic import BaseModel
 
 
@@ -25,3 +26,20 @@ class OptionSchema(BaseModel):
     """
 
     title: str
+
+
+class GameBaseSchema(BaseModel):
+    """
+    Schema defining a game
+    """
+
+    question: str
+    date: date
+    category_id: int
+
+
+class GameInSchema(GameBaseSchema):
+    """
+    Schema defining a game
+    """
+    correct_answer_id: int

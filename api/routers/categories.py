@@ -9,7 +9,7 @@ Endpoints:
     - GET /api/game_categories: Retrieve all game categories.
 """
 
-from fastapi import APIRouter, Body, HTTPException
+from fastapi import APIRouter, Body, HTTPException, Response
 from api.models import GameCategory, Option
 from api.schemas import GameCategorySchema, OptionSchema
 
@@ -34,6 +34,20 @@ async def get_game_categories():
     # Fetch game categories queryset
     categories = await GameCategory.all()
     return categories
+
+
+@router.delete("/{category_id}", tags=["Categories"])
+async def delete_game_category(category_id: int, response: Response):
+    """
+    Endpoint to get game categories
+    """
+    # Fetch game categories queryset
+    category = await GameCategory.get_or_none(id=category_id)
+    if not category:
+        raise HTTPException(status_code=404, detail="Category not found")
+    await category.delete()
+    response.status_code = 204
+    return response
 
 
 @router.post("/{category_id}/options", tags=["Categories"])
