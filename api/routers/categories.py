@@ -43,7 +43,7 @@ async def get_game_categories():
     return categories
 
 
-@router.delete("/{category_id}", tags=["Categories"])
+@router.delete("/{category_id}", tags=["Categories"], response_model=None)
 async def delete_game_category(category_id: int, response: Response):
     """
     Endpoint to get game categories
@@ -57,21 +57,26 @@ async def delete_game_category(category_id: int, response: Response):
     return response
 
 
-@router.post("/{category_id}/options", tags=["Categories"])
+@router.post(
+    "/{category_id}/options", tags=["Categories"], response_model=OptionOutSchema
+)
 async def create_option_for_category(
     category_id: int, option: OptionInSchema = Body(embed=False)
 ):
     """
     Endpoint to create option for category
     """
-    category = await GameCategory.get_or_none(id=category_id)
-    if not category:
+    try:
+        category = await GameCategory.get_or_none(id=category_id)
+        new_option = await Option.create(title=option.title, category=category)
+        return new_option
+    except DoesNotExist as exc:
         raise HTTPException(status_code=404, detail="Category not found")
-    new_option = await Option.create(title=option.title, category=category)
-    return new_option
 
 
-@router.get("/{category_id}/options", tags=["Categories"])
+@router.get(
+    "/{category_id}/options", tags=["Categories"], response_model=List[OptionOutSchema]
+)
 async def get_options_of_category(category_id: int):
     """
     Endpoint to create option for category

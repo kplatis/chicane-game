@@ -45,3 +45,6 @@ class OptionOutSchema(OptionBaseSchema):
 
     id: int
     category_id: int
+
+    class Config:
+        orm_mode = True
