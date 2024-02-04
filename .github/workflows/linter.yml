@@ -3,8 +3,8 @@ name: Lint
 on: push
 
 jobs:
-  run-linters:
-    name: Run linters
+  run-backend-linters:
+    name: Run backend linters
     runs-on: ubuntu-latest
 
     steps:
@@ -28,4 +28,30 @@ jobs:
           continue_on_error: false
           auto_fix: false
 
+  run-frontend-linters:
+    name: Run frontend linters
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - name: Install Python dependencies
+        run: npm install
+        working-directory: frontend
+
+      - name: Run linters
+        uses: wearerequired/lint-action@v2
+        with:
+          eslint: true
+          eslint_dir: frontend
+          prettier: true
+          prettier_dir: frontend
+          continue_on_error: false
+          auto_fix: false
   
