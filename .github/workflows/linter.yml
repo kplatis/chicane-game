@@ -18,7 +18,7 @@ jobs:
 
       - name: Install Python dependencies
         run: pip install black pylint
-        working-directory: backend
+        working-directory: backend/api
 
       - name: Run linters
         uses: wearerequired/lint-action@v2
