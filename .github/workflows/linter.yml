@@ -42,14 +42,14 @@ jobs:
           node-version: '18'
   
       - name: Install dependencies
-        working-directory: /frontend
+        working-directory: frontend
         run: npm install
   
       - name: Run ESLint
-        working-directory: /frontend
+        working-directory: frontend
         run: npm run lint
   
       - name: Run Prettier
-        working-directory: /frontend
+        working-directory: frontend
         run: npm run prettier:check
   
