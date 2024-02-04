@@ -9,8 +9,8 @@ the database using Tortoise-ORM's Game model.
 from datetime import date
 from tortoise.exceptions import DoesNotExist
 from fastapi import APIRouter, Body, HTTPException
-from api.models import Game, GameCategory, Option
-from api.schemas.games import GameInSchema, GameOutSchema
+from ..models import Game, GameCategory, Option
+from ..schemas.games import GameInSchema, GameOutSchema
 
 
 router = APIRouter()

@@ -6,7 +6,7 @@
     "configurations": [
         {
             "name": "Python: FastAPI",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "module": "uvicorn",
             "python": "${command:python.interpreterPath}",
@@ -15,7 +15,9 @@
                 "--reload"
             ],
             "jinja": true,
-            "justMyCode": true
-        }
+            "justMyCode": true,
+            "cwd": "${workspaceFolder}/backend" 
+        },
+
     ]
 }
