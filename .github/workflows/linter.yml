@@ -24,8 +24,9 @@ jobs:
         uses: wearerequired/lint-action@v2
         with:
           black: true
-          black_dir: api
+          black_dir: backend/api
           pylint: true
-          pylint_dir: api
+          pylint_dir: backend
+          pylint_args: "api"
           continue_on_error: false
           auto_fix: false
