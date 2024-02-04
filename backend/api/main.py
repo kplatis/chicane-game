@@ -4,8 +4,8 @@ import importlib
 from fastapi import FastAPI
 from tortoise import Tortoise
 from tortoise.contrib.fastapi import register_tortoise
-from .routers import games as games_routers
-from .routers import categories as categories_routers
+from api.routers import games as games_routers
+from api.routers import categories as categories_routers
 
 tags_metadata = [
     {

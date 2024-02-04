@@ -12,8 +12,8 @@ Endpoints:
 from typing import List
 from fastapi import APIRouter, Body, HTTPException, Response
 from tortoise.exceptions import DoesNotExist
-from ..models import GameCategory, Option
-from ..schemas.categories import (
+from api.models import GameCategory, Option
+from api.schemas.categories import (
     GameCategoryInSchema,
     GameCategoryOutSchema,
     OptionInSchema,
