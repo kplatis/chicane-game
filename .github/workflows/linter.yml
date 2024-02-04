@@ -25,8 +25,6 @@ jobs:
         with:
           black: true
           black_dir: backend/api
-          pylint: true
-          pylint_dir: backend/api
           continue_on_error: false
           auto_fix: false
         env:
