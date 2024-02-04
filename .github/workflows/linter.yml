@@ -36,12 +36,12 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v1
+      - name: Set up Javascript
+        uses: actions/setup-node@v1
         with:
-          python-version: 3.8
+          node-version: '18'
 
-      - name: Install Python dependencies
+      - name: Install Javascript dependencies
         run: npm install
         working-directory: frontend
 
