@@ -10,13 +10,13 @@ from datetime import date
 from tortoise.exceptions import DoesNotExist
 from fastapi import APIRouter, Body, HTTPException
 from api.models import Game, GameCategory, Option
-from api.schemas import GameBaseSchema, GameInSchema
+from api.schemas.games import GameInSchema, GameOutSchema
 
 
 router = APIRouter()
 
 
-@router.post("", tags=["Games"])
+@router.post("", tags=["Games"], response_model=GameOutSchema)
 async def create_new_game(new_game: GameInSchema = Body(embed=False)):
     """
     Endpoint to create a new game
@@ -38,7 +38,7 @@ async def create_new_game(new_game: GameInSchema = Body(embed=False)):
         ) from exc
 
 
-@router.get("/daily", tags=["Games"], response_model=GameBaseSchema)
+@router.get("/daily", tags=["Games"], response_model=GameOutSchema)
 async def get_daily_game():
     """
     Endpoint to retrieve information about the daily game.

@@ -9,16 +9,23 @@ Endpoints:
     - GET /api/game_categories: Retrieve all game categories.
 """
 
+from typing import List
 from fastapi import APIRouter, Body, HTTPException, Response
+from tortoise.exceptions import DoesNotExist
 from api.models import GameCategory, Option
-from api.schemas import GameCategorySchema, OptionSchema
+from api.schemas.categories import (
+    GameCategoryInSchema,
+    GameCategoryOutSchema,
+    OptionInSchema,
+    OptionOutSchema,
+)
 
 
 router = APIRouter()
 
 
-@router.post("", tags=["Categories"])
-async def create_game_category(game_category: GameCategorySchema = Body(embed=False)):
+@router.post("", tags=["Categories"], response_model=GameCategoryOutSchema)
+async def create_game_category(game_category: GameCategoryInSchema = Body(embed=False)):
     """
     Endpoint to create a new game category
     """
@@ -26,7 +33,7 @@ async def create_game_category(game_category: GameCategorySchema = Body(embed=Fa
     return new_category
 
 
-@router.get("", tags=["Categories"])
+@router.get("", tags=["Categories"], response_model=List[GameCategoryOutSchema])
 async def get_game_categories():
     """
     Endpoint to get game categories
@@ -36,40 +43,47 @@ async def get_game_categories():
     return categories
 
 
-@router.delete("/{category_id}", tags=["Categories"])
+@router.delete("/{category_id}", tags=["Categories"], response_model=None)
 async def delete_game_category(category_id: int, response: Response):
     """
     Endpoint to get game categories
     """
     # Fetch game categories queryset
-    category = await GameCategory.get_or_none(id=category_id)
-    if not category:
-        raise HTTPException(status_code=404, detail="Category not found")
-    await category.delete()
-    response.status_code = 204
-    return response
+    try:
+        category = await GameCategory.get_or_none(id=category_id)
+        await category.delete()
+        response.status_code = 204
+        return response
+    except DoesNotExist as exc:
+        raise HTTPException(status_code=404, detail="Category not found") from exc
 
 
-@router.post("/{category_id}/options", tags=["Categories"])
+@router.post(
+    "/{category_id}/options", tags=["Categories"], response_model=OptionOutSchema
+)
 async def create_option_for_category(
-    category_id: int, option: OptionSchema = Body(embed=False)
+    category_id: int, option: OptionInSchema = Body(embed=False)
 ):
     """
     Endpoint to create option for category
     """
-    category = await GameCategory.get_or_none(id=category_id)
-    if not category:
-        raise HTTPException(status_code=404, detail="Category not found")
-    new_option = await Option.create(title=option.title, category=category)
-    return new_option
+    try:
+        category = await GameCategory.get_or_none(id=category_id)
+        new_option = await Option.create(title=option.title, category=category)
+        return new_option
+    except DoesNotExist as exc:
+        raise HTTPException(status_code=404, detail="Category not found") from exc
 
 
-@router.get("/{category_id}/options", tags=["Categories"])
+@router.get(
+    "/{category_id}/options", tags=["Categories"], response_model=List[OptionOutSchema]
+)
 async def get_options_of_category(category_id: int):
     """
     Endpoint to create option for category
     """
-    category = await GameCategory.get_or_none(id=category_id)
-    if not category:
-        raise HTTPException(status_code=404, detail="Category not found")
-    return await Option.filter(category=category).all()
+    try:
+        category = await GameCategory.get_or_none(id=category_id)
+        return await Option.filter(category=category).all()
+    except DoesNotExist as exc:
+        raise HTTPException(status_code=404, detail="Category not found") from exc
