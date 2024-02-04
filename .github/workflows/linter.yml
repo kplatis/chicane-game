@@ -50,6 +50,7 @@ jobs:
         with:
           eslint: true
           eslint_dir: frontend
+          eslint_extensions: "tsx, ts"
           prettier: true
           prettier_dir: frontend
           continue_on_error: false
