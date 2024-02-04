@@ -32,4 +32,23 @@ class GameOutSchema(GameBaseSchema):
     Defines the output schema for a game
     """
 
+    id: int
+
+
+class ResponseSubmissionBaseSchema(BaseModel):
+    """Defines the base schema of a response submission"""
+
+    game_id: int
+    option_id: int
+
+
+class ResponseSubmissionInSchema(ResponseSubmissionBaseSchema):
+    """Defines the input schema of a response submission"""
+
     pass
+
+
+class ResponseSubmissionOutSchema(ResponseSubmissionBaseSchema):
+    """Defines the output schema of a response submission"""
+
+    correct: bool

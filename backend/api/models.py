@@ -58,3 +58,10 @@ class Option(Model):
     id = fields.IntField(pk=True)
     category = fields.ForeignKeyField("models.GameCategory", related_name="options")
     title = fields.CharField(max_length=300)
+
+
+class ResponseSubmission(Model):
+    id = fields.IntField(pk=True)
+    game = fields.ForeignKeyField("models.Game", related_name="responses")
+    option = fields.ForeignKeyField("models.Option", related_name="responses")
+    correct = fields.BooleanField()
