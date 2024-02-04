@@ -14,18 +14,19 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v1
         with:
-          python-version: 3.7
+          python-version: 3.8
 
       - name: Install Python dependencies
         run: pip install black pylint
-        working-directory: api
+        working-directory: backend
 
       - name: Run linters
         uses: wearerequired/lint-action@v2
         with:
           black: true
-          black_dir: api
-          pylint: true
-          pylint_dir: api
+          black_dir: backend/api
           continue_on_error: false
           auto_fix: false
+        env:
+          VERBOSE: "true"  # Add this line to enable verbose mode
+  
