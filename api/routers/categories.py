@@ -49,12 +49,13 @@ async def delete_game_category(category_id: int, response: Response):
     Endpoint to get game categories
     """
     # Fetch game categories queryset
-    category = await GameCategory.get_or_none(id=category_id)
-    if not category:
-        raise HTTPException(status_code=404, detail="Category not found")
-    await category.delete()
-    response.status_code = 204
-    return response
+    try:
+        category = await GameCategory.get_or_none(id=category_id)
+        await category.delete()
+        response.status_code = 204
+        return response
+    except DoesNotExist as exc:
+        raise HTTPException(status_code=404, detail="Category not found") from exc
 
 
 @router.post(
@@ -71,7 +72,7 @@ async def create_option_for_category(
         new_option = await Option.create(title=option.title, category=category)
         return new_option
     except DoesNotExist as exc:
-        raise HTTPException(status_code=404, detail="Category not found")
+        raise HTTPException(status_code=404, detail="Category not found") from exc
 
 
 @router.get(

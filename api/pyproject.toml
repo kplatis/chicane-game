@@ -1,3 +1,2 @@
 [tool.pylint.messages_control]
-# Ignore W107 (unnecessary-pass)
-disable = ["W107"]
+disable = ["unnecessary-pass", "too-few-public-methods"]

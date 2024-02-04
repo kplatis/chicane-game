@@ -11,7 +11,7 @@ from pydantic import BaseModel
 
 class GameBaseSchema(BaseModel):
     """
-    Schema defining a game
+    Defines the base schema for a game
     """
 
     question: str
@@ -21,7 +21,7 @@ class GameBaseSchema(BaseModel):
 
 class GameInSchema(GameBaseSchema):
     """
-    Schema defining the input of a game
+    Defines the input schema for a game
     """
 
     correct_answer_id: int
@@ -29,7 +29,7 @@ class GameInSchema(GameBaseSchema):
 
 class GameOutSchema(GameBaseSchema):
     """
-    Schema defining the output of a game
+    Defines the output schema for a game
     """
 
     pass

@@ -1,14 +1,24 @@
+"""
+Module defining Pydantic models for representing game categories.
+
+This module contains Pydantic BaseModel classes to represent various 
+schemas related to games.
+"""
+
 from pydantic import BaseModel
 
 
 class GameCategoryBaseSchema(BaseModel):
+    """
+    Defines the base schema for a game category
+    """
 
     title: str
 
 
 class GameCategoryInSchema(GameCategoryBaseSchema):
     """
-    Schema defining a game category
+    Defines the input schema for a game category
     """
 
     pass
@@ -16,7 +26,7 @@ class GameCategoryInSchema(GameCategoryBaseSchema):
 
 class GameCategoryOutSchema(GameCategoryBaseSchema):
     """
-    Schema defining a game category
+    Defines the output schema for a game category
     """
 
     id: int
@@ -24,7 +34,7 @@ class GameCategoryOutSchema(GameCategoryBaseSchema):
 
 class OptionBaseSchema(BaseModel):
     """
-    Schema defining the base of an option
+    Defines the base schema for an option
     """
 
     title: str
@@ -32,7 +42,7 @@ class OptionBaseSchema(BaseModel):
 
 class OptionInSchema(OptionBaseSchema):
     """
-    Schema defining the input of an Option
+    Defines the input schema for an option
     """
 
     pass
@@ -40,11 +50,13 @@ class OptionInSchema(OptionBaseSchema):
 
 class OptionOutSchema(OptionBaseSchema):
     """
-    Schema defining the output of an Option
+    Defines the output schema for an option
     """
 
     id: int
     category_id: int
 
     class Config:
+        """Defines the configuration of the schema"""
+
         orm_mode = True
