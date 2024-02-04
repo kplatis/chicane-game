@@ -5,6 +5,16 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "next dev",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceRoot}/frontend",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run-script", "dev"
+            ],
+        },
+        {
             "name": "Python: FastAPI",
             "type": "debugpy",
             "request": "launch",
