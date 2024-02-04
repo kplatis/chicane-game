@@ -1,4 +1,4 @@
-export default {
+module.exports = {
     extends: ['mantine', 'plugin:@next/next/recommended'],
     plugins: ['testing-library'],
     overrides: [
