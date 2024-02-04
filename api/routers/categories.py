@@ -9,16 +9,23 @@ Endpoints:
     - GET /api/game_categories: Retrieve all game categories.
 """
 
+from typing import List
 from fastapi import APIRouter, Body, HTTPException, Response
+from tortoise.exceptions import DoesNotExist
 from api.models import GameCategory, Option
-from api.schemas import GameCategorySchema, OptionSchema
+from api.schemas.categories import (
+    GameCategoryInSchema,
+    GameCategoryOutSchema,
+    OptionInSchema,
+    OptionOutSchema,
+)
 
 
 router = APIRouter()
 
 
-@router.post("", tags=["Categories"])
-async def create_game_category(game_category: GameCategorySchema = Body(embed=False)):
+@router.post("", tags=["Categories"], response_model=GameCategoryOutSchema)
+async def create_game_category(game_category: GameCategoryInSchema = Body(embed=False)):
     """
     Endpoint to create a new game category
     """
@@ -26,7 +33,7 @@ async def create_game_category(game_category: GameCategorySchema = Body(embed=Fa
     return new_category
 
 
-@router.get("", tags=["Categories"])
+@router.get("", tags=["Categories"], response_model=List[GameCategoryOutSchema])
 async def get_game_categories():
     """
     Endpoint to get game categories
@@ -52,7 +59,7 @@ async def delete_game_category(category_id: int, response: Response):
 
 @router.post("/{category_id}/options", tags=["Categories"])
 async def create_option_for_category(
-    category_id: int, option: OptionSchema = Body(embed=False)
+    category_id: int, option: OptionInSchema = Body(embed=False)
 ):
     """
     Endpoint to create option for category
@@ -69,7 +76,8 @@ async def get_options_of_category(category_id: int):
     """
     Endpoint to create option for category
     """
-    category = await GameCategory.get_or_none(id=category_id)
-    if not category:
-        raise HTTPException(status_code=404, detail="Category not found")
-    return await Option.filter(category=category).all()
+    try:
+        category = await GameCategory.get_or_none(id=category_id)
+        return await Option.filter(category=category).all()
+    except DoesNotExist as exc:
+        raise HTTPException(status_code=404, detail="Category not found") from exc
