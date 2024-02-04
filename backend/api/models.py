@@ -61,6 +61,15 @@ class Option(Model):
 
 
 class ResponseSubmission(Model):
+    """
+    Model representing a response submission for a game
+    Attributes:
+        id (int): The unique identifier for the submission.
+        game (Game): The game associated with the submission
+        option (Game): The option selected as an answer
+        correct (bool): Whether the response is correct or not
+    """
+
     id = fields.IntField(pk=True)
     game = fields.ForeignKeyField("models.Game", related_name="responses")
     option = fields.ForeignKeyField("models.Option", related_name="responses")

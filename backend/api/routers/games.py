@@ -74,7 +74,8 @@ async def submit_game_response(
         dict: Dictionary representing whether the submission is correct or not
 
     Raises:
-        HTTPException: Raised with a 404 status code and a message if the game or the option are not found
+        HTTPException: Raised with a 404 status code and a message if the game
+        or the option are not found
 
     """
     try:
