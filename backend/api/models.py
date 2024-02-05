@@ -66,8 +66,9 @@ class ResponseSubmission(Model):
     Attributes:
         id (int): The unique identifier for the submission.
         game (Game): The game associated with the submission
-        option (Game): The option selected as an answer
-        correct (bool): Whether the response is correct or not
+        answer (Option): The option selected as an answer
+        is_correct (bool): Whether the response is correct or not
+        date_time (datetime): The date and time of the submission
     """
 
     id = fields.IntField(pk=True)
