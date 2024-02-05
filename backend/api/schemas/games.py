@@ -5,7 +5,7 @@ This module contains Pydantic BaseModel classes to represent various
 schemas related to games.
 """
 
-from datetime import date
+from datetime import date, datetime
 from pydantic import BaseModel
 
 
@@ -39,7 +39,7 @@ class ResponseSubmissionBaseSchema(BaseModel):
     """Defines the base schema of a response submission"""
 
     game_id: int
-    option_id: int
+    answer_id: int
 
 
 class ResponseSubmissionInSchema(ResponseSubmissionBaseSchema):
@@ -51,4 +51,5 @@ class ResponseSubmissionInSchema(ResponseSubmissionBaseSchema):
 class ResponseSubmissionOutSchema(ResponseSubmissionBaseSchema):
     """Defines the output schema of a response submission"""
 
-    correct: bool
+    is_correct: bool
+    date_time: datetime

@@ -6,7 +6,7 @@ includes an endpoint for retrieving information about the daily game. It interac
 the database using Tortoise-ORM's Game model.
 """
 
-from datetime import date
+from datetime import date, datetime
 from tortoise.exceptions import DoesNotExist
 from fastapi import APIRouter, Body, HTTPException
 from api.models import Game, GameCategory, Option, ResponseSubmission
@@ -80,10 +80,10 @@ async def submit_game_response(
     """
     try:
         game = await Game.get(id=response.game_id)
-        option = await Option.get(id=response.option_id)
+        option = await Option.get(id=response.answer_id)
         is_correct = game.correct_answer_id == option.id
         submission = await ResponseSubmission.create(
-            game=game, option=option, correct=is_correct
+            game=game, answer=option, is_correct=is_correct, date_time=datetime.now()
         )
         return submission
     except DoesNotExist as exc:

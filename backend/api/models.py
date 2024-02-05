@@ -72,5 +72,6 @@ class ResponseSubmission(Model):
 
     id = fields.IntField(pk=True)
     game = fields.ForeignKeyField("models.Game", related_name="responses")
-    option = fields.ForeignKeyField("models.Option", related_name="responses")
-    correct = fields.BooleanField()
+    answer = fields.ForeignKeyField("models.Option", related_name="responses")
+    is_correct = fields.BooleanField()
+    date_time = fields.DatetimeField()
