@@ -6,11 +6,16 @@ includes an endpoint for retrieving information about the daily game. It interac
 the database using Tortoise-ORM's Game model.
 """
 
-from datetime import date
+from datetime import date, datetime
 from tortoise.exceptions import DoesNotExist
 from fastapi import APIRouter, Body, HTTPException
-from api.models import Game, GameCategory, Option
-from api.schemas.games import GameInSchema, GameOutSchema
+from api.models import Game, GameCategory, Option, ResponseSubmission
+from api.schemas.games import (
+    GameInSchema,
+    GameOutSchema,
+    ResponseSubmissionInSchema,
+    ResponseSubmissionOutSchema,
+)
 
 
 router = APIRouter()
@@ -54,3 +59,35 @@ async def get_daily_game():
         return game
     except DoesNotExist as exc:
         raise HTTPException(status_code=404, detail="Game not found") from exc
+
+
+@router.post(
+    "/daily/submit", tags=["Games"], response_model=ResponseSubmissionOutSchema
+)
+async def submit_game_response(
+    response: ResponseSubmissionInSchema = Body(embed=False),
+):
+    """
+    Endpoint to submit a game response
+
+    Returns:
+        dict: Dictionary representing whether the submission is correct or not
+
+    Raises:
+        HTTPException: Raised with a 404 status code and a message if the game
+        or the option are not found
+
+    """
+    try:
+        game = await Game.get(id=response.game_id)
+        option = await Option.get(id=response.answer_id)
+        is_correct = game.correct_answer_id == option.id
+        submission = await ResponseSubmission.create(
+            game=game, answer=option, is_correct=is_correct, date_time=datetime.now()
+        )
+        return submission
+    except DoesNotExist as exc:
+        error_message = "Option" if not game else "Correct Answer ID"
+        raise HTTPException(
+            status_code=404, detail=f"{error_message} not found"
+        ) from exc

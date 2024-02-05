@@ -58,3 +58,21 @@ class Option(Model):
     id = fields.IntField(pk=True)
     category = fields.ForeignKeyField("models.GameCategory", related_name="options")
     title = fields.CharField(max_length=300)
+
+
+class ResponseSubmission(Model):
+    """
+    Model representing a response submission for a game
+    Attributes:
+        id (int): The unique identifier for the submission.
+        game (Game): The game associated with the submission
+        answer (Option): The option selected as an answer
+        is_correct (bool): Whether the response is correct or not
+        date_time (datetime): The date and time of the submission
+    """
+
+    id = fields.IntField(pk=True)
+    game = fields.ForeignKeyField("models.Game", related_name="responses")
+    answer = fields.ForeignKeyField("models.Option", related_name="responses")
+    is_correct = fields.BooleanField()
+    date_time = fields.DatetimeField()
