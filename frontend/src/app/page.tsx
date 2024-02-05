@@ -1,9 +1,11 @@
-import { Welcome } from '@/components/Welcome/Welcome';
+import Image from "next/image";
 
-export default function HomePage() {
+export default function Home({children}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <>
-      <Welcome />
-    </>
+    <main>
+      {children}
+    </main>
   );
 }
