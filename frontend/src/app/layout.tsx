@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import ThemeProvider from '@/components/ThemeProvider'
+import Providers from '@/components/Providers'
 
 export const metadata: Metadata = {
   title: 'Chicane Game',
@@ -17,14 +17,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ThemeProvider
+        <Providers
           attribute="class"
           defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
           {children}
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
   )

@@ -1,18 +1,9 @@
+import { getDailyGame } from '@/api/games'
 import DailyGame from '@/components/DailyGame'
-import { Game } from '@/types/games'
 
 export default async function DailyGamePage() {
-  const data = await getData()
+  // TODO: Add error case
+  const data = await getDailyGame()
 
-  return <DailyGame question={data.question} />
-}
-
-async function getData(): Promise<Game> {
-  const res = await fetch('http://localhost:8000/games/daily')
-  console.log(res)
-  if (!res.ok) {
-    throw new Error('Failed to fetch data')
-  }
-
-  return res.json()
+  return <DailyGame question={data.question} categoryId={data.category_id} />
 }
