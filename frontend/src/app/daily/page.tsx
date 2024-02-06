@@ -9,7 +9,7 @@ export default async function DailyGamePage() {
 
 async function getData(): Promise<Game> {
   const res = await fetch('http://localhost:8000/games/daily')
-
+  console.log(res)
   if (!res.ok) {
     throw new Error('Failed to fetch data')
   }
