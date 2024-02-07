@@ -49,4 +49,8 @@ jobs:
       - name: Run ESLint
         working-directory: frontend
         run: npm run lint
-  
+      
+      - name: Run Prettier check
+        working-directory: frontend
+        run: npm run prettier:check
+      

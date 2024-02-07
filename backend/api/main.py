@@ -1,6 +1,7 @@
 """FastAPI Application for Daily Games"""
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from tortoise import Tortoise
 from tortoise.contrib.fastapi import register_tortoise
 from api.routers import games as games_routers
@@ -18,6 +19,14 @@ tags_metadata = [
 ]
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # You can replace "*" with specific origins
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["*"],  # You can replace "*" with specific headers
+)
 
 app.include_router(games_routers.router, prefix="/games")
 app.include_router(categories_routers.router, prefix="/categories")
