@@ -13,7 +13,8 @@
       "version": "detect"
     }
   },
+  "ignorePatterns": ["src/components/ui/*"],
   "rules": {
-    // Add any project-specific rules or overrides here
+    "react/react-in-jsx-scope": "off"
   }
 }

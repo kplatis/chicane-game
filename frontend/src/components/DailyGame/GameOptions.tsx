@@ -3,7 +3,6 @@
 import { getOptionsByCategoryId } from '@/api/categories'
 import { useQuery } from 'react-query'
 import Spinner from '../Spinner'
-import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
@@ -26,12 +25,14 @@ export default function GameOptions({ categoryId }: GameOptionsProps) {
   if (isLoading) {
     return <Spinner />
   }
+  if (isError) {
+    return <div>Options could not be loaded</div>
+  }
   if (data) {
     return (
       <form>
         <div className="grid w-full items-center gap-4">
           <div className="flex flex-col space-y-1.5">
-            <Label htmlFor="framework">Framework</Label>
             <Select>
               <SelectTrigger id="framework">
                 <SelectValue placeholder="Select" />
