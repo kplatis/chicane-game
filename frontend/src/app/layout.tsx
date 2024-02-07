@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import Providers from '@/components/Providers'
+import Menu from '@/components/Menu'
 
 export const metadata: Metadata = {
   title: 'Chicane Game',
@@ -23,7 +24,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <div className="flex flex-col h-screen">
+            <header className="w-full py-4 px-6 flex justify-between items-center">
+              <div>Chicane Game</div>
+              <Menu />
+            </header>
+            {children}
+          </div>
         </Providers>
       </body>
     </html>
